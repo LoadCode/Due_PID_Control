@@ -1,4 +1,4 @@
-nu#include "controlador.h"
+#include "controlador.h"
 
 Controlador::Controlador()
 {
