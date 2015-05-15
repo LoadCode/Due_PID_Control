@@ -1,3 +1,6 @@
+#Matlab autosave files
+*.asv
+
 # Compiled Object files
 *.slo
 *.lo
