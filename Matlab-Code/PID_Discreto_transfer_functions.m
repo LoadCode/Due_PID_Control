@@ -13,9 +13,9 @@ title('Step response form the plant')
 step(G);
 
 %PID transfer function
-kp = 300;
-ki  = 10;
-kd = 0.8;
+kp = 300; %300
+ki  = 10;%10
+kd = 0.8;%0.8
 PID = tf([kd kp ki],[1 0]); 
 
 %Feedback transfer function for the complete system (plant and PID action)
@@ -28,10 +28,15 @@ hold on
 %%************************Discrete Control System************************** 
 %in open and closed loop the greatest pole is: -5.385+17.049978i and the
 %magnitude is P = 17.8802 so the sample time will be Ts <= 2pi/(10P) <= 0.03s -> Ts = 0.02
-Ts     = 0.001;
+Ts = 0.005;
 qo = kp+(ki*Ts)/2+kd/Ts;
 q1 = (ki*Ts)/2-kp-(2*kd)/Ts;
 q2 = -((ki*Ts)/2-kd/Ts);
+
+% qo = kp+(ki)/2+kd; %no sample time in equations
+% q1 = (ki)/2-kp-(2*kd);
+% q2 = -((ki)/2-kd);
+
 Gz     = c2d(G,Ts); %discrete model
 PIDz  = tf([qo q1 q2],[1 -1 0],Ts); %discrete PID model
 Gzc   = feedback(PIDz*Gz,1);
