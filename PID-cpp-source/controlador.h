@@ -11,7 +11,7 @@ class Controlador
                                double minOutput, double maxOutput);
 
         //virtual ~Controlador();
-       virtual void Lectura()  = 0; //Lee del pinEntrada y almacena el valor en salidaPlanta (realimentación) //Funcion virtual
+       virtual double Lectura()=0 ; //Lee del pinEntrada y almacena el valor en salidaPlanta (realimentación) //Funcion virtual
        //virtual void Escritura()  = 0; //Escribe el valor calculado por el controlador (salidaControlador) en el pinSalida (DAC usado)   //Función  virutal
 
         void SetReferencia(double referencia); //lectura externa, definir entrada
