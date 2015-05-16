@@ -6,18 +6,22 @@ class Controlador
 {
     public:
 
-        Controlador();
+        Controlador(); //Default constructor
+        Controlador(double Ts, int inputPin, int outputPin,\
+                               double minOutput, double maxOutput);
 
-        virtual ~Controlador();
+        //virtual ~Controlador();
        virtual void Lectura()  = 0; //Lee del pinEntrada y almacena el valor en salidaPlanta (realimentación) //Funcion virtual
-       virtual void Escritura()  = 0; //Escribe el valor calculado por el controlador (salidaControlador) en el pinSalida (DAC usado)   //Función  virutal
+       //virtual void Escritura()  = 0; //Escribe el valor calculado por el controlador (salidaControlador) en el pinSalida (DAC usado)   //Función  virutal
 
         void SetReferencia(double referencia); //lectura externa, definir entrada
         void SetSalidaMaxima(double salidaMaxima);
         void SetSalidaMinima(double salidaMinima);
+        void SetSampleTime(double sampleTime);
+        void SetInputPin(int inputPin);
+        void SetOutputPin(int outputPin);
 
-    private:
-
+    protected: //As this class will be inherited, if members aren't in protected mode then may not be accessed
        int pinEntrada; //pin para lectura del ADC para variable de realimentación
        int pinSalida;    //pin que indica el DAC que se usa de salida
       double referencia; //valor deseado
@@ -25,6 +29,7 @@ class Controlador
       double salidaControlador; //salida del controlador hacia la planta //U
       double salidaMaxima; //Valor máximo para la salida del controlador
       double salidaMinima;  //Valor mínimo para la salida del controlador
+      double Ts;    //Sample time
 };
 
 #endif // CONTROLADOR_H

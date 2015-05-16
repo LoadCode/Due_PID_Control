@@ -3,6 +3,9 @@
 
 #code::blocks config files
 *.cbp
+*.depend
+bin/*
+obj/*
 
 # Compiled Object files
 *.slo
