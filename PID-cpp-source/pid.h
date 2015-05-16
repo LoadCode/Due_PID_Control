@@ -6,7 +6,7 @@ class PID: public Controlador
 {
     public:
         PID();
-        PID::PID(double Ts, int inputPin, int outputPin, double minOutput, double maxOutput) : Controlador(Ts, inputPin, outputPin, minOutput, maxOutput)
+        PID(double Ts, int inputPin, int outputPin, double minOutput, double maxOutput) : Controlador(Ts, inputPin, outputPin, minOutput, maxOutput)
         {
             /**this constructor receives the following parameters:
                  Ts:  Sample time for the controller
@@ -17,7 +17,8 @@ class PID: public Controlador
         **/
         }
 
-        void Compute()
+        void Compute();
+        virtual double Lectura(); //Override Lectura which is a pure virtual method
         void SetPIDParameters(double kp, double ki, double kd);
         double GetSampleTime();
         int GetInputPin();
