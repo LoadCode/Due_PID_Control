@@ -1,6 +1,9 @@
 #Matlab autosave files
 *.asv
 
+#code::blocks config files
+*.cbp
+
 # Compiled Object files
 *.slo
 *.lo
