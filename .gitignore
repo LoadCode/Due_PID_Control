@@ -4,8 +4,11 @@
 #code::blocks config files
 *.cbp
 *.depend
+*.layout
 bin/*
 obj/*
+USB_Ejemplo/*
+
 
 # Compiled Object files
 *.slo

@@ -18,6 +18,7 @@ class PID: public Controlador
         }
 
         void Compute();
+        void SetSampleTime(double sampleTime); //In pid, if sample time is changed in execution time, kp, ki and kd need to be adapted
         virtual double Lectura(); //Override Lectura which is a pure virtual method
         void SetPIDParameters(double kp, double ki, double kd);
         double GetSampleTime();
@@ -30,6 +31,7 @@ class PID: public Controlador
         double kd;
         double error;         //actual error
         double prevError; //previous error
+        double prevSalidaPlanta; // previous plant output to Arduino
         double iTerm;        //Integral term of PID equation
         double dTerm;      //Derivative term of PID equation
         double pTerm;       //Proportional term of PID equation

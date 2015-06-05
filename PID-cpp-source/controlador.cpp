@@ -8,8 +8,8 @@ Controlador::Controlador()
 Controlador::Controlador(double Ts, int inputPin, int outputPin, double minOutput, double maxOutput)
 {
     this->Ts = Ts;
-    this->pinEntrada = inputPin;
-    this->pinSalida    = outputPin;
+    this->pinEntrada      = inputPin;
+    this->pinSalida         = outputPin;
     this->salidaMaxima = maxOutput;
     this->salidaMinima  = minOutput;
 }
