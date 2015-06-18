@@ -1,50 +1,53 @@
 #include "controlador.h"
 
-Controlador::Controlador()
-{
 
+/**
+*@brief Método de inicialización de las variables del controlador básico
+*
+*Esta función es al encargada de indicar al controlador el periodo de muestreo, el ADC y DAC que se usarán y los valores de voltaje
+*máximos y mínimos presentes en el sistema.
+*/
+Controlador::Controlador(double T, int inputPin, int outputPin, double minOutput, double maxOutput)
+{
+    Ts = T;
+    pinEntrada   = inputPin;
+    pinSalida    = outputPin;
+    salidaMaxima = maxOutput;
+    salidaMinima = minOutput;
 }
 
-Controlador::Controlador(double Ts, int inputPin, int outputPin, double minOutput, double maxOutput)
-{
-    this->Ts = Ts;
-    this->pinEntrada      = inputPin;
-    this->pinSalida         = outputPin;
-    this->salidaMaxima = maxOutput;
-    this->salidaMinima  = minOutput;
-}
 
 /************************************************/
 /***** Setters and getters for the base class *****/
 /************************************************/
-void Controlador::SetReferencia(double referencia)
+void Controlador::SetReferencia(double refer)
 {
-    this->referencia = referencia;
+    referencia = refer;
 }
 
-void Controlador::SetSalidaMaxima(double salidaMaxima)
+void Controlador::SetSalidaMaxima(double salMax)
 {
-    this->salidaMaxima = salidaMaxima;
+    salidaMaxima = salMax;
 }
 
-void Controlador::SetSalidaMinima(double salidaMinima)
+void Controlador::SetSalidaMinima(double salMin)
 {
-    this->salidaMinima = salidaMinima;
+    salidaMinima = salMin;
 }
 
 void Controlador::SetSampleTime(double sampleTime)
 {
-    this->Ts = sampleTime;
+    Ts = sampleTime;
 }
 
 void Controlador::SetInputPin(int inputPin)
 {
-    this->pinEntrada = inputPin;
+    pinEntrada = inputPin;
 }
 
 void Controlador::SetOutputPin(int outputPin)
 {
-    this->pinSalida = outputPin;
+    pinSalida = outputPin;
 }
 
 /*Controlador::~Controlador()

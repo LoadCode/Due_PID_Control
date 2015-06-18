@@ -1,6 +1,23 @@
 #ifndef PID_H
 #define PID_H
-#include "controlador.h"
+#include <Arduino.h>
+#include <controlador.h>
+
+/**
+*@class PID
+*@brief Esta clase contiene la implementación del controlador PID para el Arduino DUE
+*
+*La clase PID contiene los métodos:
+* - Compute
+* - Lectura
+* - Escritura
+* - SetSampleTime
+* - SetPIDParameters
+* - InitResolution
+*
+*Los cuales son suficientes para un correcto desemespeño del PID en un proceso de control basado en la placa Arduino.
+*/
+
 
 class PID: public Controlador
 {
@@ -8,33 +25,36 @@ class PID: public Controlador
         PID();
         PID(double Ts, int inputPin, int outputPin, double minOutput, double maxOutput) : Controlador(Ts, inputPin, outputPin, minOutput, maxOutput)
         {
-            /**this constructor receives the following parameters:
-                 Ts:  Sample time for the controller
-            inputPin:  indicates the ADC input pin that will be used to capture the process variable
-          outputPin:  indicates the DAC output pin that will be used to control the process variable
-        maxOutput:  maximum saturation value for the system (for anti-windup)
-         minOutput:  minimum saturation value for the system
-        **/
+            /**Este constructor recibe los sigueintes parámetros:
+         *-        Ts:  Periodo de muestreo para el controlador en cuestión
+         *-  inputPin:  Indica el ADC que será usado por el controlador para capturar los valores de la variable controlada
+         *- outputPin:  Indica el DAC que usará el controlador
+         *- maxOutput:  Valor de saturación (máximo) que presenta el sistema (voltios)
+         *- minOutput:  Valor de saturación (mínimo) quepodrá presentar el sistema (voltios)
+        */
+
         }
 
-        void Compute();
-        void SetSampleTime(double sampleTime); //In pid, if sample time is changed in execution time, kp, ki and kd need to be adapted
-        virtual double Lectura(); //Override Lectura which is a pure virtual method
-        void SetPIDParameters(double kp, double ki, double kd);
-        double GetSampleTime();
-        int GetInputPin();
-        int GetOutputPin();
+        void Compute();///<Este método realiza el cálculo de la salida del controlador PID y lo almacena en la variable salidaControlador
+        virtual double Lectura();   ///<Sobreescribe el método Lectura que es un método Virtual Puro de la clase Controlador
+        virtual void   Escritura(); ///<Sobreescribe el método Escritura que es un método Virtual Puro de la clase Controlador
+        virtual void SetSampleTime(double sampleTime); ///<Este método cambia el periodo de muestreo, además adapta las ganancia Ki, Kd y Kp con respecto al nuevo Ts
+        void SetPIDParameters(double kp, double ki, double kd); ///<Introduce los valores de las ganancias en el objeto PID
+        static void InitResolution(int res);  ///<Este método define la resolución de los DACs y ADCs utilizados (10 bits por defecto)
         virtual ~PID();
-    private:
-        double kp;
-        double ki;
-        double kd;
-        double error;         //actual error
-        double prevError; //previous error
-        double prevSalidaPlanta; // previous plant output to Arduino
-        double iTerm;        //Integral term of PID equation
-        double dTerm;      //Derivative term of PID equation
-        double pTerm;       //Proportional term of PID equation
+        static int res;            ///<Resolución para los DACs y ADCs
+    protected:
+        double kp;                 ///<Ganancia proporcional del controlador
+        double ki;                  ///<Ganancia integral del controlador
+        double kd;                 ///<Ganancia derivativa del controlador
+        double error;            ///<Error actual
+        double prevError;    ///<Error anterior (se tiene en cuenta para el cálculo de la integral)
+        double prevSalidaPlanta; ///<Salida anterior, la cual le entregó la planta al Arduino en la última iteración
+        double iTerm;            ///<Término integral para la ecuación del PID
+        double dTerm;           ///<Término derivativo para la ecuación del PID
+        double pTerm;           ///<Término proporcional para la ecuación del PID
+        int ys;                         ///<Almacena el valor que se desea sacar por el DAC
+        int xen;                       ///<Almacena el valor que entrega el ADC utilizado
 };
 
 #endif // PID_H
